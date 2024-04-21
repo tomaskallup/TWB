@@ -28,9 +28,9 @@
         <h4>Bot</h4>
         Status:
         {% if data.status %}
-            <button class="btn btn-sm btn-success">Active</button>
+            <button class="btn btn-sm btn-success" onclick="stop_bot()">Active</button>
         {% else %}
-            <button class="btn btn-sm btn-warning">Inactive</button>
+            <button class="btn btn-sm btn-warning" onclick="start_bot()">Inactive</button>
             <br />
             <i>Ignore this if you are running twb.py yourself</i>
         {% endif %}
@@ -44,7 +44,17 @@
 {% endblock %}
 {% block scripts %}
 <script>
-
+  function start_bot() {
+    $.get('/bot/start', function () {
+      window.location.reload();
+    });
+  }
+  
+  function stop_bot() {
+    $.get('/bot/stop', function () {
+      window.location.reload();
+    });
+  }
 
 </script>
 {% endblock %}

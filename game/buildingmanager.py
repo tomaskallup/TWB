@@ -23,6 +23,7 @@ class BuildingManager:
     queue = []
     waits = []
     waits_building = []
+    existing_queue = []
 
     costs = {}
 
@@ -91,6 +92,7 @@ class BuildingManager:
             tmp[e] = int(tmp[e])
         self.levels = tmp
         existing_queue = Extractor.active_building_queue(main_data)
+        self.existing_queue = existing_queue
         if existing_queue == 0:
             self.waits = []
             self.waits_building = []
@@ -289,6 +291,7 @@ class BuildingManager:
                 return self.get_next_building_action(index)
             if check["can_build"] and self.has_enough(check) and "build_link" in check:
                 queue = self.put_wait(check["build_time"])
+                self.existing_queue += 1
                 self.logger.info(
                     "Building %s %d -> %d (finishes: %s)"
                     % (

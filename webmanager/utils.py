@@ -185,23 +185,22 @@ class MapBuilder:
 
 
 class BotManager:
-    pid = None
+    process = None
 
     def is_running(self):
-        if not self.pid:
+        if not self.process:
             return False
-        if psutil.pid_exists(self.pid):
+        if self.process.poll() is None:
             return True
-        self.pid = False
+        self.process = None
         return False
 
     def start(self):
         wd = os.path.join(os.path.dirname(__file__), "..")
-        proc = subprocess.Popen("python twb.py", cwd=wd, shell=True)
-        self.pid = proc.pid
+        self.process = subprocess.Popen(["python", "twb.py"], cwd=wd)
         print("Bot started successfully")
 
     def stop(self):
         if self.is_running():
-            os.kill(self.pid, sig=0)
+            self.process.kill()
             print("Bot stopped successfully")

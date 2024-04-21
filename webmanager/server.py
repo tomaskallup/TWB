@@ -151,6 +151,10 @@ def sync():
     sort_reports = {key: value for key, value in sorted(reports.items(), key=lambda item: int(item[0]))}
     n_items = {k: sort_reports[k] for k in list(sort_reports)[:100]}
 
+    for village in managed.keys():
+        if not 'building_levels' in managed[village]:
+            managed[village]['building_levels'] = managed[village]['buidling_levels']
+
     out_struct = {
         "attacks": attacks,
         "villages": villages,

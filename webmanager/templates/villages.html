@@ -33,13 +33,26 @@
 				</tr>
 				<tr>
 					<td></td>
-					<td>
+					<td colspan="2">
 						{% for unit in data.bot[village_id].troops %}
-							<img src="/static/images/unit_{{unit}}.png" alt="{{unit}}" /> {{data.bot[village_id].troops[unit]}}
+              <img src="/static/images/unit_{{unit}}.png" alt="{{unit}}" title="{{unit.capitalize()}}" /> {{data.bot[village_id].troops[unit]}}
 						{% endfor %}
 					</td>
-					<td>
-						Building: {{data.bot[village_id].queued | count}}
+          <td colspan="3">
+						Recruiting: {{data.bot[village_id].queued | count}}
+					</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td colspan="2">
+            {% for building in data.bot[village_id].building_levels %}
+              {% if data.bot[village_id].building_levels[building] > 0 %}
+                <img src="/static/images/buildings/{{building}}1.png" alt="{{building.capitalize()}}" title="{{building.capitalize()}}" /> {{data.bot[village_id].building_levels[building]}}
+              {% endif %}
+            {% endfor %}
+					</td>
+          <td colspan="3">
+						Building: {{data.bot[village_id].building_in_progress}}
 					</td>
 				</tr>
 			{% endfor %}
@@ -47,4 +60,7 @@
 	</table>
 </div>
 
+{% endblock %}
+
+{% block scripts %}
 {% endblock %}
